@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HACKLABBG</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    color:#00ff88;
+    font-family:"Courier New", monospace;
+    overflow:hidden;
+}
+
+/* CRT EFFECT */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,100,0.05),
+        rgba(0,255,100,0.05) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    pointer-events:none;
+    z-index:9999;
+}
+
+/* LAYOUT */
+
+.wrapper{
+    display:flex;
+    height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:320px;
+    background:#001018;
+    border-right:2px solid #00ff88;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.logo{
+    font-size:42px;
+
+    text-shadow:
+    0 0 10px #00ff88,
+    0 0 20px #00ff88;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#82ffc8;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+.author{
+    color:#5dffb3;
+    margin-bottom:30px;
+    line-height:1.7;
+
+    border:1px solid #00ff88;
+    padding:12px;
+
+    background:#000;
+
+    box-shadow:
+    0 0 10px rgba(0,255,136,0.2);
+}
+
+.labBtn{
+    width:100%;
+    padding:15px;
+    margin-bottom:15px;
+
+    background:black;
+    border:2px solid #00ff88;
+    color:#00ff88;
+
+    font-family:inherit;
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.labBtn:hover{
+    background:#00ff88;
+    color:black;
+}
+
+
+
+.main{
+    flex:1;
+    padding:30px;
+    overflow-y:auto;
+}
+
+/* TERMINAL-1337 elite */
+
+.terminal{
+    border:2px solid #00ff88;
+    background:#000;
+    padding:25px;
+
+    box-shadow:
+    0 0 20px rgba(0,255,136,0.3);
+}
+
+.header{
+    color:#8effc9;
+    margin-bottom:30px;
+}
+
+.blink{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+    50%{
+        opacity:0;
+    }
+}
+
+/* SECTION-ni */
+
+.section{
+    margin-bottom:40px;
+}
+
+.section h2{
+    margin-bottom:20px;
+    color:#00ff88;
+}
+
+.section p{
+    color:#9dffd2;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+
+
+.code{
+    background:#00131d;
+    border:1px solid #00ff88;
+    padding:20px;
+    margin-top:20px;
+    margin-bottom:20px;
+    overflow:auto;
+    color:#00ff88;
+}
+
+/* BOX */
+
+.box{
+    border:2px dashed #00ff88;
+    padding:20px;
+    background:#001018;
+    margin-top:20px;
+}
+
+/* INPUT */
+
+.input{
+    width:100%;
+    padding:14px;
+    background:black;
+    border:2px solid #00ff88;
+    color:#00ff88;
+    margin-bottom:15px;
+    font-family:inherit;
+}
+
+/* BUTTON */
+
+.button{
+    width:100%;
+    padding:14px;
+
+    background:black;
+    border:2px solid #00ff88;
+    color:#00ff88;
+
+    cursor:pointer;
+    font-family:inherit;
+
+    transition:0.2s;
+}
+
+.button:hover{
+    background:#00ff88;
+    color:black;
+}
+
+/* OUTPUT */
+
+.output{
+    margin-top:20px;
+    border:1px solid #00ff88;
+    padding:15px;
+    background:#000;
+    min-height:80px;
+    color:#8dffc8;
+}
+
+
+
+.commentBox{
+    margin-top:20px;
+    border:1px solid #00ff88;
+    padding:20px;
+    min-height:100px;
+    background:#001018;
+}
+
+
+
+.footer{
+    margin-top:50px;
+    text-align:center;
+    color:#337d5a;
+}
+
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+   <!--sidebar code (ujasen ;d)-->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            HACKLABBG
+        </div>
+
+        <div class="subtitle">
+            Българска OWASP training платформа.
+            Всички уязвимости са направени
+            нарочно за educational purposes.
+        </div>
+
+        <div class="author">
+            Направено от Joropentagrama *Продължава се работа върху сайта, извинявам се ако има бъг с кода или нещо не зарежда правилно. :]
+        </div>
+
+        <button class="labBtn" onclick="showLab('home')">
+            🏠 HOME
+        </button>
+
+        <button class="labBtn" onclick="showLab('sqli')">
+            💉 SQL Injection
+        </button>
+
+        <button class="labBtn" onclick="showLab('xss')">
+            ⚠️ Cross Site Scripting
+        </button>
+
+        <button class="labBtn" onclick="showLab('idor')">
+            🔓 IDOR
+        </button>
+
+        <button class="labBtn" onclick="showLab('cmd')">
+            💀 Command Injection
+        </button>
+
+        <button class="labBtn" onclick="showLab('upload')">
+            📂 File Upload
+        </button>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <div class="terminal">
+
+            <div class="header">
+                root@hacklabbg:~$
+                <span class="blink">█</span>
+            </div>
+
+            <!-- home menu: -->
+
+            <div id="home" class="lab">
+
+                <div class="section">
+
+                    <h2>
+                        Добре дошъл в HACKLABBG
+                    </h2>
+
+                    <p>
+                        HACKLABBG е beginner-friendly
+                        платформа за изучаване
+                        на web security.
+                    </p>
+
+                    <p>
+                        Тук ще намериш basic OWASP TOP 10
+                        labs написани на български.
+                    </p>
+
+                    <p>
+                        Целта е хората да учат:
+                    </p>
+
+                    <ul style="margin-left:30px;line-height:2;color:#9dffd2;">
+
+                        <li>как работят атаките</li>
+                        <li>защо се случват</li>
+                        <li>как се предотвратяват</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="box">
+
+                    <b>⚠️ IMPORTANT</b>
+
+                    <br><br>
+
+                    Тези labs са направени само
+                    за educational purposes.
+
+                    <br><br>
+
+                    Не използвай знанията
+                    върху системи без permission.
+
+                </div>
+
+            </div>
+
+            <!-- SQLinjection -->
+
+            <div id="sqli" class="lab" style="display:none;">
+
+                <div class="section">
+
+                    <h2>
+                        💉 SQL Injection
+                    </h2>
+
+                    <p>
+                        SQL Injection е уязвимост,
+                        при която attacker може
+                        да inject-не SQL код
+                        в database заявка.
+                    </p>
+
+                    <p>
+                        Това става когато сайтът
+                        слага user input директно
+                        в SQL query.
+                    </p>
+
+                    <div class="code">
+
+SELECT * FROM users
+WHERE username='$user'
+AND password='$pass';
+
+                    </div>
+
+                    <p>
+                        Ако input-ът не е защитен,
+                        attacker може да промени
+                        логиката на заявката.
+                    </p>
+
+                    <p>
+                        Един от най-известните
+                        payload-и е:
+                    </p>
+
+                    <div class="code">
+
+' OR '1'='1
+
+                    </div>
+
+                    <p>
+                        '1'='1' винаги е TRUE.
+                    </p>
+
+                    <p>
+                        Така login системата може
+                        да мисли че authentication-ът
+                        е успешен.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <b>MISSION:</b>
+
+                    <br><br>
+
+                    Влез като admin без password.
+
+                </div>
+
+                <br>
+
+                <input
+                type="text"
+                id="sqlUser"
+                class="input"
+                placeholder="username">
+
+                <input
+                type="password"
+                id="sqlPass"
+                class="input"
+                placeholder="password">
+
+                <button
+                class="button"
+                onclick="loginSQL()">
+                    LOGIN
+                </button>
+
+                <div class="output" id="sqlOutput">
+                    awaiting input...
+                </div>
+
+            </div>
+
+            <!-- XSS -->
+
+            <div id="xss" class="lab" style="display:none;">
+
+                <div class="section">
+
+                    <h2>
+                        ⚠️ Cross Site Scripting (XSS)
+                    </h2>
+
+                    <p>
+                        XSS позволява attacker
+                        да inject-не JavaScript
+                        в web страницата.
+                    </p>
+
+                    <p>
+                        Това се случва когато
+                        сайтът render-ва user input
+                        без filtering.
+                    </p>
+
+                    <p>
+                        Пример:
+                    </p>
+
+                    <div class="code">
+
+&lt;script&gt;
+alert(1)
+&lt;/script&gt;
+
+                    </div>
+
+                    <p>
+                        Browser-ът ще изпълни
+                        JavaScript кода.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <b>MISSION:</b>
+
+                    <br><br>
+
+                    Опитай да inject-неш HTML.
+
+                </div>
+
+                <br>
+
+                <input
+                type="text"
+                id="xssInput"
+                class="input"
+                placeholder="comment">
+
+                <button
+                class="button"
+                onclick="postComment()">
+                    POST
+                </button>
+
+                <div
+                class="commentBox"
+                id="commentBox">
+
+                </div>
+
+            </div>
+
+            <!-- IDOR -->
+
+            <div id="idor" class="lab" style="display:none;">
+
+                <div class="section">
+
+                    <h2>
+                        🔓 IDOR
+                    </h2>
+
+                    <p>
+                        IDOR означава:
+                        Insecure Direct Object Reference.
+                    </p>
+
+                    <p>
+                        Това се случва когато
+                        сайтът не проверява
+                        authorization-а правилно.
+                    </p>
+
+                    <div class="code">
+
+/profile?id=1
+
+                    </div>
+
+                    <p>
+                        Ако attacker смени ID-то,
+                        може да достъпи чужди данни.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <b>MISSION:</b>
+
+                    <br><br>
+
+                    Намери admin profile-а.
+
+                </div>
+
+                <br>
+
+                <input
+                type="number"
+                id="idorInput"
+                class="input"
+                placeholder="profile id">
+
+                <button
+                class="button"
+                onclick="loadProfile()">
+                    LOAD PROFILE
+                </button>
+
+                <div class="output" id="idorOutput">
+
+                </div>
+
+            </div>
+
+            <div class="footer">
+                HACKLABBG © 2026
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function showLab(id){
+
+    document.querySelectorAll(".lab")
+    .forEach(l=>{
+
+        l.style.display = "none";
+    });
+
+    document.getElementById(id)
+    .style.display = "block";
+}
+
+function loginSQL(){
+
+    const user =
+    document.getElementById("sqlUser").value;
+
+    const pass =
+    document.getElementById("sqlPass").value;
+
+    const output =
+    document.getElementById("sqlOutput");
+
+    if(
+        user.includes("'") ||
+        pass.includes("'")
+    ){
+
+        output.innerHTML =
+        " SQL Injection SUCCESS<br><br>Welcome admin.";
+
+    }else{
+
+        output.innerHTML =
+        "Probvai pak :)";
+    }
+}
+
+function postComment(){
+
+    const input =
+    document.getElementById("xssInput").value;
+
+    const box =
+    document.getElementById("commentBox");
+
+    //  УЧЕБЕН LAB: умишлено unsafe render *Ne izpolzvaite sreshtu istinski WEbsite-ove. Nqma da stane s basic script tagove :)
+    box.innerHTML += `
+        <div style="margin-bottom:10px;padding:10px;border:1px solid #00ff88;">
+            ${input}
+        </div>
+    `;
+}
+
+function loadProfile(){
+
+    const id =
+    document.getElementById("idorInput").value;
+
+    const output =
+    document.getElementById("idorOutput");
+
+    if(id == 1){
+
+        output.innerHTML =
+        "👤 USER PROFILE<br>Email: user@test.bg";
+    }
+    // ako si se setil/setila da vidish source kod za id na admin evala :)
+    else if(id == 999){
+
+        output.innerHTML =
+        "💀 ADMIN PROFILE<br>Role: ROOT";
+    }
+
+    else{
+
+        output.innerHTML =
+        "❌ profile not found";
+    }
+}
+
+</script>
+
+</body>
+</html>
